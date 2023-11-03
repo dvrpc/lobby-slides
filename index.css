@@ -1,0 +1,271 @@
+html,
+body {
+  margin: 0px;
+  background-color: black;
+}
+
+body {
+  min-height: 100%;
+  font-family: Roboto;
+}
+
+.slide {
+  animation: fadeIn ease 10s;
+  display: none;
+  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  height: 100vh;
+}
+
+.visible {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #061e3a;
+}
+
+.header {
+  text-align: left;
+  color: white;
+  width: 80%;
+  display: flex;
+  align-items: flex-start;
+  margin-top: 10%;
+}
+
+.calendar-header {
+  display: flex;
+  width: 80%;
+}
+
+.calendar-header * {
+  text-align: right;
+  color: #62cbe6;
+  margin: 3px;
+  width: 25%;
+  font-size: 2.25em;
+}
+
+.info {
+  text-align: right;
+  color: #62cbe6;
+  font-size: 3.25em;
+  width: 80%;
+  margin-top: 15%;
+}
+
+.info > i {
+  font-size: smaller;
+}
+
+.release-img {
+  border: 5px solid white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.welcome {
+  margin-top: 30%;
+}
+
+.welcome > h1 {
+  font-size: 10em;
+  margin: 0;
+}
+
+h1 {
+  color: white;
+  font-size: 5em;
+  white-space: nowrap;
+  width: 80%;
+}
+
+#fhwa-fta-container {
+  background-color: #01182b !important;
+  background-image: url("./images/dvrpc-transparent.png");
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: top 15% left -65%;
+}
+
+#events-container {
+  justify-content: start;
+  background-color: #01182b;
+}
+#this-month-container,
+#next-month-container,
+#events-container,
+#new-releases-container,
+#anns-container {
+  background-image: url("./images/dvrpc-transparent.png");
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: top -5% right -80%;
+}
+
+#events-container > h1,
+.happening-container > h1 {
+  width: 80%;
+  font-size: 10em;
+  margin-top: 4%;
+}
+
+#new-releases-container {
+  justify-content: start;
+  background-color: #01182b;
+}
+
+#this-month-container,
+#next-month-container {
+  justify-content: start;
+  background-color: #005475;
+}
+
+#this-month-container > h1,
+#next-month-container > h1,
+#anns-container > h1 {
+  font-size: 7em;
+  margin-top: 4%;
+}
+
+#new-releases-container > h1 {
+  font-size: 8.25em;
+  margin-top: 4%;
+}
+
+#new-releases-container > h2 {
+  color: #abf3ff;
+  font-size: 3.55em;
+  width: 80%;
+  margin-top: 0%;
+}
+
+#welcome-container {
+  justify-content: start;
+  background-image: url("./images/dvrpc-transparent.png");
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: top 20% left -65%;
+  color: white;
+  background-color: #005475;
+}
+
+#anns-container {
+  justify-content: start;
+  color: white;
+  background-color: #01182b;
+}
+
+#anns-container > h1 {
+  line-height: 95%;
+}
+
+.happening-slide {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+}
+
+.happening-container {
+  justify-content: start;
+  text-align: center;
+  background-color: #005475;
+  background-image: url("./images/dvrpc-transparent.png");
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: top -5% right -80%;
+}
+
+.happening-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  width: 100%;
+  min-height: 30%;
+  height: fit-content;
+}
+
+.happening-text > * {
+  color: #005475;
+  margin: 0px;
+  font-weight: 400;
+  font-size: 6em;
+}
+
+.qr {
+  display: flex;
+  height: 90%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.disabled {
+  display: none;
+}
+
+#default-happening-container {
+  background-image: url("./images/dvrpc-transparent.png");
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: top -5% right -80%;
+  background-color: #01182b;
+  justify-content: start;
+}
+
+#default-happening-container > h1 {
+  font-size: 7em;
+}
+
+#default-happening-container > h2 {
+  font-size: 3.7em;
+  white-space: no-wrap;
+  width: 80%;
+  color: white;
+  margin: 0px;
+  font-weight: bolder;
+}
+
+.qr-codes {
+  column-count: 3;
+  display: flex;
+}
+
+.qr-codes > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
