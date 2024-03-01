@@ -205,25 +205,56 @@ function fetchData(obj) {
           return Object.assign({}, data, { calendarEvents: events });
         });
       return appendEvents;
+    })
+    .then(function (data) {
+      var annsArticles = fetch(
+        "https://cms.dvrpc.org/jsonapi/node/article?filter[promote]=1&sort=-created&page[limit]=5"
+      )
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (articles) {
+          return Object.assign({}, data, { anns: [...articles.data] });
+        });
+      return annsArticles;
+    })
+    .then(function (data) {
+      var annsAnnouncements = fetch(
+        "https://cms.dvrpc.org/jsonapi/node/announcement?filter[promote]=1&sort=-created&page[limit]=5"
+      )
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (anns) {
+          return Object.assign({}, data, {
+            anns: [...data.anns, ...anns.data],
+          });
+        });
+      return annsAnnouncements;
     });
   return ret;
 }
 
 function generateAnnouncements(announcements) {
   var container = document.getElementById("anns-container");
+  announcements = announcements.sort(function (a, b) {
+    return new Date(b.attributes.created) - new Date(a.attributes.created);
+  });
   for (var i = 0; i < announcements.length; i++) {
     var announcement = announcements[i];
+    var { body, title } = announcement.attributes;
     var div = document.createElement("div");
     div.style.width = "80%";
     div.style.marginBottom = "3%";
     div.innerHTML +=
       '<div style="display: flex;"><span style="font-size:3.25em; font-weight: bold; margin: 0px;">' +
-      announcement.title +
+      title +
       "</span>";
-    div.innerHTML +=
-      '<span style="font-weight:lighter;font-size:3em;color: rgb(209 213 219);">' +
-      announcement.description +
-      "</span></div>";
+    if (announcement.type === "node--announcement")
+      div.innerHTML +=
+        '<span style="font-weight:lighter;font-size:3em;color: rgb(209 213 219);">' +
+        body.value +
+        "</span></div>";
     container.appendChild(div);
   }
 }
