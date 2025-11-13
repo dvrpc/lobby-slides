@@ -184,12 +184,14 @@ function toggleSlides() {
 window.setInterval(toggleSlides, 10000);
 
 function fetchData(obj) {
-  var ret = fetch("https://www.dvrpc.org/asp/homepage/default2.aspx")
+  var ret = fetch(
+    "https://apis.dvrpc.org/internal/dvrpc_products/products/product?onlyfeatured=true&limit=5"
+  )
     .then(function (res) {
       return res.json();
     })
     .then(function (data) {
-      return data;
+      return { pubs: data.items };
     })
     .then(function (data) {
       var timemin =
@@ -581,7 +583,7 @@ function generateReleases(releases) {
     releaseImg.innerHTML +=
       '<img style="max-height:175px;"src=' +
       "https://www.dvrpc.org/asp/pubs/201px/" +
-      release.PubId +
+      release.id +
       ".png" +
       ">";
     releaseImg.style.minWidth = "25%";
@@ -594,7 +596,7 @@ function generateReleases(releases) {
     releaseInfo.style.marginLeft = "20px";
     releaseInfo.innerHTML +=
       '<span style="font-weight: bold; font-size: 2.25em;">' +
-      release.Title +
+      release.title +
       "</span>";
     div.appendChild(releaseImg);
     div.appendChild(releaseInfo);
