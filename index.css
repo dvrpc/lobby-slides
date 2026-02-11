@@ -6,7 +6,11 @@ body {
 
 body {
   min-height: 100%;
-  font-family: Roboto;
+  font-family: 'Source Sans 3';
+}
+
+h1, h2 {
+  font-family: 'Inclusive Sans' !important;
 }
 
 .slide {
