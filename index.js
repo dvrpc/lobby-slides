@@ -181,7 +181,7 @@ function toggleSlides() {
   );
 }
 
-window.setInterval(toggleSlides, 10000);
+// window.setInterval(toggleSlides, 10000);
 
 function fetchData(obj) {
   var ret = fetch(
@@ -492,7 +492,7 @@ function generateEvents(events) {
     eventDate.innerHTML +=
       '<div style="margin-top:7px;font-size:2.75em;display:flex;flex-direction:column;font-weight:bold;"><span style="color: #56b4d1; margin: 0px">' +
       date.toLocaleString("en-us", { month: "short" }).toUpperCase() +
-      '</span> <span style="font-size:1.5em;font-weight:normal;">' +
+      '</span> <span style="font-size:1.5em;font-weight:normal;margin-top:-15px;">' +
       date.getDate() +
       "</span></div>";
     eventInfo.style.height = "100px";
