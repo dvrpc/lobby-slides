@@ -209,6 +209,18 @@ function fetchData(obj) {
       return appendEvents;
     })
     .then(function (data) {
+      var events = fetch(
+        "https://www3.dvrpc.org/asp/homepage/getCalendarItems.aspx?maxresults=6"
+      )
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (events) {
+          return Object.assign({}, data, { events });
+        });
+      return events;
+    })
+    .then(function (data) {
       var annsArticles = fetch(
         "https://cms.dvrpc.org/jsonapi/node/article?filter[promote]=1&sort=-created&page[limit]=5"
       )
