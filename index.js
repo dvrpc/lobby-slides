@@ -181,7 +181,7 @@ function toggleSlides() {
   );
 }
 
-// window.setInterval(toggleSlides, 10000);
+window.setInterval(toggleSlides, 10000);
 
 function fetchData(obj) {
   var ret = fetch(
