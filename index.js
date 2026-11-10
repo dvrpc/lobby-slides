@@ -31,7 +31,7 @@ if (!Array.from) {
       // 3. ReturnIfAbrupt(items).
       if (arrayLike == null) {
         throw new TypeError(
-          "Array.from requires an array-like object - not null or undefined"
+          "Array.from requires an array-like object - not null or undefined",
         );
       }
 
@@ -43,7 +43,7 @@ if (!Array.from) {
         // 5. a If IsCallable(mapfn) is false, throw a TypeError exception.
         if (!isCallable(mapFn)) {
           throw new TypeError(
-            "Array.from: when provided, the second argument must be a function"
+            "Array.from: when provided, the second argument must be a function",
           );
         }
 
@@ -177,7 +177,7 @@ function toggleSlides() {
   activeSlide.classList.toggle("visible");
   var index = slides.indexOf(activeSlide);
   return slides[index + 1 === slides.length ? 0 : index + 1].classList.toggle(
-    "visible"
+    "visible",
   );
 }
 
@@ -185,7 +185,7 @@ window.setInterval(toggleSlides, 10000);
 
 function fetchData(obj) {
   var ret = fetch(
-    "https://apis.dvrpc.org/internal/dvrpc_products/products/product?onlyfeatured=true&limit=5"
+    "https://apis.dvrpc.org/internal/dvrpc_products/products/product?onlyfeatured=true&limit=5",
   )
     .then(function (res) {
       return res.json();
@@ -198,7 +198,7 @@ function fetchData(obj) {
         obj.thisMonth[obj.thisMonth.length - 1].toLocaleDateString();
       var timemax = obj.nextMonth[0].toLocaleDateString();
       var appendEvents = fetch(
-        `https://www.dvrpc.org/asp/homepage/getCalendarItems.aspx?timemin=${timemin}&timemax=${timemax}`
+        `https://www.dvrpc.org/asp/homepage/getCalendarItems.aspx?timemin=${timemin}&timemax=${timemax}`,
       )
         .then(function (res) {
           return res.json();
@@ -210,7 +210,7 @@ function fetchData(obj) {
     })
     .then(function (data) {
       var events = fetch(
-        "https://www3.dvrpc.org/asp/homepage/getCalendarItems.aspx?maxresults=6"
+        "https://www3.dvrpc.org/asp/homepage/getCalendarItems.aspx?maxresults=6",
       )
         .then(function (res) {
           return res.json();
@@ -222,7 +222,7 @@ function fetchData(obj) {
     })
     .then(function (data) {
       var annsArticles = fetch(
-        "https://cms.dvrpc.org/jsonapi/node/article?filter[promote]=1&sort=-created&page[limit]=5"
+        "https://dvrpc.org/jsonapi/node/article?filter[status]=1&sort=-created&page[limit]=5&include=field_image.field_media_image,field_topic,field_tags,field_content",
       )
         .then(function (res) {
           return res.json();
@@ -234,7 +234,7 @@ function fetchData(obj) {
     })
     .then(function (data) {
       var annsAnnouncements = fetch(
-        "https://cms.dvrpc.org/jsonapi/node/announcement?filter[promote]=1&sort=-created&page[limit]=5"
+        "https://dvrpc.org/jsonapi/node/announcement?filter[promote]=1&sort=-created&page[limit]=5",
       )
         .then(function (res) {
           return res.json();
@@ -465,7 +465,7 @@ function generateEvents(events) {
   if (eventsCopy.length > 6) {
     eventsCopy = eventsCopy.slice(
       0,
-      eventsCopy.length - (eventsCopy.length - 6)
+      eventsCopy.length - (eventsCopy.length - 6),
     );
   }
 
@@ -556,7 +556,7 @@ function displayHappeningNow(events) {
   var today = new Date();
   today.setHours(0, 0, 0, 0);
   var happeningSlides = Array.from(
-    document.querySelectorAll(".happening-container")
+    document.querySelectorAll(".happening-container"),
   );
   for (var i = 0; i < events.length; i++) {
     var event = events[i];
