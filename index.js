@@ -222,7 +222,7 @@ function fetchData(obj) {
     })
     .then(function (data) {
       var annsArticles = fetch(
-        "https://dvrpc.org/jsonapi/node/article?filter[status]=1&sort=-created&page[limit]=5&include=field_image.field_media_image,field_topic,field_tags,field_content",
+        "https://www.dvrpc.org/jsonapi/node/article?filter[status]=1&sort=-created&page[limit]=5&include=field_image.field_media_image,field_topic,field_tags,field_content",
       )
         .then(function (res) {
           return res.json();
@@ -234,7 +234,7 @@ function fetchData(obj) {
     })
     .then(function (data) {
       var annsAnnouncements = fetch(
-        "https://dvrpc.org/jsonapi/node/announcement?filter[promote]=1&sort=-created&page[limit]=5",
+        "https://www.dvrpc.org/jsonapi/node/announcement?filter[promote]=1&sort=-created&page[limit]=5",
       )
         .then(function (res) {
           return res.json();
