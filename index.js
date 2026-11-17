@@ -152,21 +152,12 @@ if (!Array.prototype.includes) {
   };
 }
 
-function generateUI(data, calendarObj) {
-  generateEvents(data.events, calendarObj);
-  generateCalendar(calendarObj.thisMonth, true);
-  generateCalendar(calendarObj.nextMonth, false);
-  appendEvents(data.calendarEvents);
-  generateReleases(data.pubs);
-  generateAnnouncements(data.anns);
-  displayHappeningNow(data.events);
-}
-
 window.onload = function () {
   var calendarObj = generateCalendarObject();
-  fetchData(calendarObj).then(function (res) {
-    generateUI(res, calendarObj);
-  });
+  // Calendar rendering consumes its arrays; preserve the originals for the query.
+  generateCalendar(calendarObj.thisMonth.slice(), true);
+  generateCalendar(calendarObj.nextMonth.slice(), false);
+  fetchData(calendarObj);
 };
 
 function toggleSlides() {
@@ -192,49 +183,49 @@ function fetchNews() {
   });
 }
 
+function fetchJSON(url) {
+  return fetch(url).then(function (res) {
+    if (!res.ok) throw new Error("Unable to load " + url + ": " + res.status);
+    return res.json();
+  });
+}
+
+function reportLoadError(error) {
+  console.error("Unable to load slide content:", error);
+}
+
 function fetchData(obj) {
-  var ret = fetch(
+  var timemin = obj.thisMonth[obj.thisMonth.length - 1].toLocaleDateString();
+  var timemax = obj.nextMonth[0].toLocaleDateString();
+
+  // Start each feed independently and render it as soon as it is ready.
+  fetchJSON(
     "https://apis.dvrpc.org/internal/dvrpc_products/products/product?onlyfeatured=true&limit=5",
   )
-    .then(function (res) {
-      return res.json();
-    })
     .then(function (data) {
-      return { pubs: data.items };
+      generateReleases(data.items);
     })
-    .then(function (data) {
-      var timemin =
-        obj.thisMonth[obj.thisMonth.length - 1].toLocaleDateString();
-      var timemax = obj.nextMonth[0].toLocaleDateString();
-      var appendEvents = fetch(
-        `https://www.dvrpc.org/asp/homepage/getCalendarItems.aspx?timemin=${timemin}&timemax=${timemax}`,
-      )
-        .then(function (res) {
-          return res.json();
-        })
-        .then(function (events) {
-          return Object.assign({}, data, { calendarEvents: events });
-        });
-      return appendEvents;
+    .catch(reportLoadError);
+
+  fetchJSON(
+    "https://www.dvrpc.org/asp/homepage/getCalendarItems.aspx?timemin=" +
+      encodeURIComponent(timemin) +
+      "&timemax=" +
+      encodeURIComponent(timemax),
+  )
+    .then(appendEvents)
+    .catch(reportLoadError);
+
+  fetchJSON(
+    "https://www.dvrpc.org/asp/homepage/getCalendarItems.aspx?maxresults=6",
+  )
+    .then(function (events) {
+      generateEvents(events);
+      displayHappeningNow(events);
     })
-    .then(function (data) {
-      var events = fetch(
-        "https://www3.dvrpc.org/asp/homepage/getCalendarItems.aspx?maxresults=6",
-      )
-        .then(function (res) {
-          return res.json();
-        })
-        .then(function (events) {
-          return Object.assign({}, data, { events });
-        });
-      return events;
-    })
-    .then(function (data) {
-      return fetchNews().then(function (news) {
-        return Object.assign({}, data, { anns: news });
-      });
-    });
-  return ret;
+    .catch(reportLoadError);
+
+  fetchNews().then(generateAnnouncements).catch(reportLoadError);
 }
 
 function newsText(value) {
@@ -473,6 +464,7 @@ var months = [
 ];
 
 function generateEvents(events) {
+  if (!events.length) return;
   var container = document.getElementById("events-container");
   var today = new Date();
   today.setHours(0, 0, 0, 0);
