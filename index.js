@@ -31,7 +31,7 @@ if (!Array.from) {
       // 3. ReturnIfAbrupt(items).
       if (arrayLike == null) {
         throw new TypeError(
-          "Array.from requires an array-like object - not null or undefined",
+          "Array.from requires an array-like object - not null or undefined"
         );
       }
 
@@ -43,7 +43,7 @@ if (!Array.from) {
         // 5. a If IsCallable(mapfn) is false, throw a TypeError exception.
         if (!isCallable(mapFn)) {
           throw new TypeError(
-            "Array.from: when provided, the second argument must be a function",
+            "Array.from: when provided, the second argument must be a function"
           );
         }
 
@@ -168,7 +168,7 @@ function toggleSlides() {
   activeSlide.classList.toggle("visible");
   var index = slides.indexOf(activeSlide);
   return slides[index + 1 === slides.length ? 0 : index + 1].classList.toggle(
-    "visible",
+    "visible"
   );
 }
 
@@ -200,7 +200,7 @@ function fetchData(obj) {
 
   // Start each feed independently and render it as soon as it is ready.
   fetchJSON(
-    "https://apis.dvrpc.org/internal/dvrpc_products/products/product?onlyfeatured=true&limit=5",
+    "https://apis.dvrpc.org/internal/dvrpc_products/products/product?onlyfeatured=true&limit=5"
   )
     .then(function (data) {
       generateReleases(data.items);
@@ -211,13 +211,13 @@ function fetchData(obj) {
     "https://www.dvrpc.org/asp/homepage/getCalendarItems.aspx?timemin=" +
       encodeURIComponent(timemin) +
       "&timemax=" +
-      encodeURIComponent(timemax),
+      encodeURIComponent(timemax)
   )
     .then(appendEvents)
     .catch(reportLoadError);
 
   fetchJSON(
-    "https://www.dvrpc.org/asp/homepage/getCalendarItems.aspx?maxresults=6",
+    "https://www.dvrpc.org/asp/homepage/getCalendarItems.aspx?maxresults=6"
   )
     .then(function (events) {
       generateEvents(events);
@@ -480,12 +480,12 @@ function generateEvents(events) {
   if (eventsCopy.length > 6) {
     eventsCopy = eventsCopy.slice(
       0,
-      eventsCopy.length - (eventsCopy.length - 6),
+      eventsCopy.length - (eventsCopy.length - 6)
     );
   }
 
   for (var i = 0; i < eventsCopy.length; i++) {
-    let event = eventsCopy[i];
+    var event = eventsCopy[i];
     var date = new Date(event.StartDate);
     date.setDate(date.getDate() + 1);
     var div = document.createElement("div");
@@ -549,7 +549,7 @@ function parseEventDate(date) {
   return eventDate;
 }
 
-var slides = new Set([
+var happeningTitles = [
   "Board and Executive Committee Meeting",
   "Climate Change Planning Forum Meeting",
   "Board and Executive Committee Meeting",
@@ -565,20 +565,20 @@ var slides = new Set([
   "Regional Safety Task Force Meeting",
   "Regional Technical Committee (RTC)",
   "Transportation Operations Task Force (TOTF) Meeting",
-]);
+];
 
 function displayHappeningNow(events) {
   var today = new Date();
   today.setHours(0, 0, 0, 0);
   var happeningSlides = Array.from(
-    document.querySelectorAll(".happening-container"),
+    document.querySelectorAll(".happening-container")
   );
   for (var i = 0; i < events.length; i++) {
     var event = events[i];
     var eventDate = parseEventDate(event.StartDate);
     if (
       today.toUTCString() === eventDate.toUTCString() &&
-      slides.has(event.Title.trim())
+      happeningTitles.indexOf(event.Title.trim()) !== -1
     ) {
       for (var j = 0; j < happeningSlides.length; j++) {
         if (happeningSlides[j].id === event.Title.trim().replace(/\s/g, "-")) {
