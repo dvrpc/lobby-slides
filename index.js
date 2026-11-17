@@ -242,7 +242,6 @@ function generateAnnouncements(response) {
   if (previous) container.removeChild(previous);
   var list = document.createElement("div");
   list.className = "news-list";
-  var included = response.included || [];
   var seen = {};
   var announcements = (Array.isArray(response) ? response : response.data || [])
     .filter(function (item) {
@@ -257,31 +256,11 @@ function generateAnnouncements(response) {
   for (var i = 0; i < announcements.length; i++) {
     var announcement = announcements[i];
     var attributes = announcement.attributes;
-    var summary =
-      newsText(attributes.field_summary) || newsText(attributes.body);
-    if (!summary) {
-      var content =
-        announcement.relationships && announcement.relationships.field_content;
-      summary = ((content && content.data) || [])
-        .map(function (reference) {
-          var paragraph = included.find(function (item) {
-            return item.id === reference.id && item.type === reference.type;
-          });
-          return paragraph ? newsText(paragraph.attributes.field_text) : "";
-        })
-        .filter(Boolean)
-        .join(" ");
-    }
     var div = document.createElement("article");
     div.className = "news-item";
     var title = document.createElement("h2");
     title.textContent = newsText(attributes.title);
     div.appendChild(title);
-    if (summary) {
-      var description = document.createElement("p");
-      description.textContent = summary;
-      div.appendChild(description);
-    }
     list.appendChild(div);
   }
   container.appendChild(list);
