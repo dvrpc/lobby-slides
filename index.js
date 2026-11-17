@@ -468,20 +468,13 @@ function generateEvents(events) {
   var container = document.getElementById("events-container");
   var today = new Date();
   today.setHours(0, 0, 0, 0);
-  var eventDate = parseEventDate(events[0].StartDate);
-  var eventsCopy = Array.from(events);
-  // iterate through events and check if event has already happened
-  while (today > eventDate) {
-    if (eventsCopy.length === 6) break;
-    eventsCopy.shift();
-    eventDate = parseEventDate(events[0].StartDate);
-  }
-  // // only display the first 6 events
-  if (eventsCopy.length > 6) {
-    eventsCopy = eventsCopy.slice(
-      0,
-      eventsCopy.length - (eventsCopy.length - 6)
-    );
+  var eventsCopy = [];
+  // Examine each item at most once, keeping up to six current/future events.
+  for (var eventIndex = 0; eventIndex < events.length; eventIndex++) {
+    if (parseEventDate(events[eventIndex].StartDate) >= today) {
+      eventsCopy.push(events[eventIndex]);
+      if (eventsCopy.length === 6) break;
+    }
   }
 
   for (var i = 0; i < eventsCopy.length; i++) {
